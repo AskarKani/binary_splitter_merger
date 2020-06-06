@@ -12,14 +12,14 @@ if __name__ == '__main__':
 
     des = "!........................! IMAGE SPLITTER MERGER !........................!\n " \
           "\rpython main.py -s -b split size in bytes(default=100MB) binary_file\n" \
-           "\rpython main.py -m  -i folder_path(splitted images) out_file_name"
+           "\rpython main.py -m  -i folder_path(splitted images) - o out_file_name"
     parser = argparse.ArgumentParser(description=des, formatter_class=argparse.RawTextHelpFormatter)
     parser.add_argument('-b', metavar= 'split size in bytes(default=100MB)', default=104857600, type=int)
     parser.add_argument('-s', action="store_true", default=False, help='to split')
     parser.add_argument('-m', action="store_true", default=False, help= 'to merge')
     parser.add_argument('-i', action="store", metavar='input_path', help='folder_path(contains split images)')
+    parser.add_argument('-o', action="store", metavar='merge_outfile_name', help='merge_file_name')
     parser.add_argument('binary_file', nargs='?')
-    parser.add_argument('out_file_name', nargs='?')
     arg = parser.parse_args()
 
     print(arg)
@@ -50,10 +50,10 @@ if __name__ == '__main__':
         if not os.path.isdir(arg.i):
             print(str(arg.i) + " is not a valid folder path")
             sys.exit(1)
-        if not arg.out_file_name:
+        if not arg.o:
             out_file_name = input("Enter the output file name.... ")
         else:
-            out_file_name = arg.out_file_name
+            out_file_name = arg.o
         print("Merging the files from " + str(arg.i) + " folder to " + str(out_file_name))
         binary_merger.main(arg.i, out_file_name)
 
