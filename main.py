@@ -8,21 +8,26 @@ if __name__ == '__main__':
     if sys.version_info[0] < 3:
         print("!!!WARNING!!! RUN with PYTHON 3...")
         sys.exit(1)
-    import binary_splitter, binary_merger
+    import binary_splitter, binary_merger, clean
 
     des = "!........................! IMAGE SPLITTER MERGER !........................!\n " \
           "\rpython main.py -s -b split size in bytes(default=100MB) binary_file\n" \
-           "\rpython main.py -m  -i folder_path(splitted images) - o out_file_name"
+           "\rpython main.py -m  -i folder_path(splitted images) - o out_file_name\n" \
+            "python main.py -clean"
     parser = argparse.ArgumentParser(description=des, formatter_class=argparse.RawTextHelpFormatter)
     parser.add_argument('-b', metavar= 'split size in bytes(default=100MB)', default=104857600, type=int)
     parser.add_argument('-s', action="store_true", default=False, help='to split')
     parser.add_argument('-m', action="store_true", default=False, help= 'to merge')
     parser.add_argument('-i', action="store", metavar='input_path', help='folder_path(contains split images)')
     parser.add_argument('-o', action="store", metavar='merge_outfile_name', help='merge_file_name')
+    parser.add_argument('-clean', action="store_true", default=False, help='clean the split and merge output folder')
     parser.add_argument('binary_file', nargs='?')
     arg = parser.parse_args()
 
     print(arg)
+    if arg.clean:
+        clean.clean()
+        sys.exit(1)
     result = [arg.s, arg.m]
     count = [0 for _ in result if _ ]
     if count.count(0) == 2:
