@@ -130,3 +130,5 @@ dmypy.json
 
 #img files
 *.img
+#hash_text file
+sha_256.txt
