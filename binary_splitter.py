@@ -29,7 +29,7 @@ def main(binary_file, split_bytes):
     hash_file_path = hash_folder_path / "sha_256.txt"
     print("\nStoring the hash value of " + str(binary_file) + " in " + str(hash_file_path))
     with open(hash_file_path, 'w') as hash_file:
-        hash_file.write("\nStoring the hash value of " + str(binary_file) + "\n")
+        hash_file.write("Storing the hash value of " + str(binary_file) + "\n")
         hash_file.write(hash_find.sha256(binary_file))
 
     number_of_files = math.ceil(binary_file_size / split_bytes)
