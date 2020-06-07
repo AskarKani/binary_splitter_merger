@@ -20,11 +20,12 @@ if __name__ == '__main__':
     parser.add_argument('-m', action="store_true", default=False, help= 'to merge')
     parser.add_argument('-i', action="store", metavar='input_path', help='folder_path(contains split images)')
     parser.add_argument('-o', action="store", metavar='merge_outfile_name', help='merge_file_name')
+    parser.add_argument('-hashvalue', action="store", metavar='hash check', \
+                        default=False, help='Check the genearted file\'s hash with value provided')
     parser.add_argument('-clean', action="store_true", default=False, help='clean the split and merge output folder')
     parser.add_argument('binary_file', nargs='?')
     arg = parser.parse_args()
 
-    print(arg)
     if arg.clean:
         clean.clean()
         sys.exit(1)
@@ -39,26 +40,28 @@ if __name__ == '__main__':
 
     if arg.s:
         if not arg.binary_file:
-            print("Pass binary_file for splitting..")
+            print("\nPass binary_file for splitting..")
             sys.exit(1)
         if not os.path.isfile(arg.binary_file):
             print(str(arg.binary_file) + " is not a valid file path")
             sys.exit(1)
         print("!!.........................! BINARY SPLITTER !.........................!!")
-        print("Splittig the file " + str(arg.binary_file) + " with CHUNK SIZE " + str(arg.b))
+        print("\nSplittig the file " + str(arg.binary_file) + " with CHUNK SIZE " + str(arg.b))
         binary_splitter.main(arg.binary_file, arg.b)
     elif arg.m:
         print("!!.........................! BINARY MERGER !.........................!!")
         if not arg.i:
-            print("Pass the path which contains the splitted images with -i option")
+            print("\nPass the path which contains the splitted images with -i option")
             sys.exit(1)
         if not os.path.isdir(arg.i):
-            print(str(arg.i) + " is not a valid folder path")
+            print("\n" + str(arg.i) + " is not a valid folder path")
             sys.exit(1)
         if not arg.o:
-            out_file_name = input("Enter the output file name.... ")
+            out_file_name = input("\nEnter the output file name.... ")
         else:
             out_file_name = arg.o
-        print("Merging the files from " + str(arg.i) + " folder to " + str(out_file_name))
-        binary_merger.main(arg.i, out_file_name)
+        print("\nMerging the files from " + str(arg.i) + " folder to " + str(out_file_name))
+        if not arg.hashvalue:
+            print("\nCheck sha256_sum of merged file with -hashvalue option")
+        binary_merger.main(arg.i, out_file_name, arg.hashvalue)
 
