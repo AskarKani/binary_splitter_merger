@@ -1,7 +1,7 @@
 import hashlib
 
 
-def sha256(file):
+def sha256(file, silent=True):
     BLOCK_SIZE = 65536  # The size of each read from the file
 
     file_hash = hashlib.sha256()  # Create the hash object, can use something other than `.sha256()` if you wish
@@ -10,6 +10,6 @@ def sha256(file):
         while len(fb) > 0:  # While there is still data being read from the file
             file_hash.update(fb)  # Update the hash
             fb = f.read(BLOCK_SIZE)  # Read the next block from the file
-
-    print(file_hash.hexdigest())  # Get the hexadecimal digest of the hash
+    if not silent:
+        print(file_hash.hexdigest())  # Get the hexadecimal digest of the hash
     return file_hash.hexdigest()
