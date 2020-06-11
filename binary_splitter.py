@@ -27,10 +27,10 @@ def main(binary_file, split_bytes):
     if not os.path.isdir(hash_folder_path):
         os.mkdir(hash_folder_path)
     hash_file_path = hash_folder_path / "sha_256.txt"
-    print("\nStoring the hash value of " + str(binary_file) + " in " + str(hash_file_path))
+    print("\nThe sha256sum hash of  " + str(binary_file) + " stored in " + str(hash_file_path))
     with open(hash_file_path, 'w') as hash_file:
-        hash_file.write("Storing the hash value of " + str(binary_file) + "\n")
-        hash_file.write(hash_find.sha256(binary_file))
+        hash_file.write("Hash value of " + str(binary_file) + " : ")
+        hash_file.write(hash_find.sha256(binary_file) + "\n")
 
     number_of_files = math.ceil(binary_file_size / split_bytes)
     print("\nTOTAL NUMBER OF FILES : " + str(number_of_files))
@@ -44,5 +44,11 @@ def main(binary_file, split_bytes):
         gen_file = out_folder_path / file_name
         with open(gen_file, 'wb') as write_file:
             write_file.write(binary_file_content.read(split_bytes))
-        print("Generating file : " + str(file_name) + str(" ...."), end ='\r', flush=True)
+        with open(hash_file_path, 'a') as hash_file:
+            hash_file.write("Hash value of " + str(file_name) + " : ")
+            hash_file.write(hash_find.sha256(gen_file) + "\n")
+
+        print("Generating file : " + str(file_name) + str(" and hash...."), end ='\r', flush=True)
+
     print("\n\nThe splitted files are stored in " + str(out_folder_path))
+    print("The sha256sum hash of splitted files are stored in " + str(hash_file_path))
