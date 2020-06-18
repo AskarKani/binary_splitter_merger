@@ -1,4 +1,4 @@
-
+# Image Splitter Merger
 
 Image splitter merger used for splitting the images in to smaller chunks and can be send and downloaded as chunks
 having less network bandwidth and can be merger to get a original file.
